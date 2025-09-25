@@ -16,7 +16,7 @@ from hummingbot.strategy_v2.controllers.directional_trading_controller_base impo
     DirectionalTradingControllerBase,
 )
 from hummingbot.strategy_v2.executors.position_executor.data_types import PositionExecutorConfig
-from hummingbot.strategy_v2.models.executors import ExecutorAction, CreateExecutorAction, StopExecutorAction
+from hummingbot.strategy_v2.models.executor_actions import ExecutorAction, CreateExecutorAction, StopExecutorAction
 
 from ewmac_config_v01 import EWMACControllerConfig
 
