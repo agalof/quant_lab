@@ -3,5 +3,6 @@
     "python-envs.defaultPackageManager": "ms-python.python:conda",
     "python-envs.pythonProjects": [],
     "python.analysis.extraPaths": ["./hummingbot"],
-    "python.defaultInterpreterPath": "~/miniconda3/envs/quant_lab/python.exe"
+    "python.defaultInterpreterPath": "~/miniconda3/envs/quant_lab/python.exe",
+    "python.envFile": "${workspaceFolder}/.env" 
 }

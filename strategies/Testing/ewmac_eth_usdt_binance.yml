@@ -1,0 +1,93 @@
+# EWMAC Strategy Configuration
+# Example configuration for ETH-USDT on Binance
+# 
+# This YAML file defines all parameters for the EWMAC strategy.
+# It can be used for both backtesting and live trading.
+#
+# Strategy: Exponentially Weighted Moving Average Crossover
+# Author: Quants Lab Team
+# Date: 2025-09-29
+
+# ========== Strategy Identification ==========
+controller_name: ewmac
+controller_type: directional_trading
+id: ewmac_eth_usdt_binance
+
+# ========== Exchange and Trading Pair ==========
+connector_name: binance_paper_trade
+trading_pair: ETH-USDT
+
+# ========== EMA Parameters ==========
+# Fast EMA period (default: 8 periods)
+# Smaller values = more responsive to price changes
+fast_ema_period: 8
+
+# Slow EMA period (default: 32 periods)
+# Larger values = smoother, less responsive to noise
+slow_ema_period: 32
+
+# ========== Position Sizing ==========
+# Fixed position size in quote currency (USDT)
+position_size_quote: 100
+
+# Total capital allocated to this strategy
+total_amount_quote: 1000
+
+# ========== Risk Management ==========
+# Maximum number of concurrent positions per side (long/short)
+max_executors_per_side: 1
+
+# Cooldown time between position changes (seconds)
+cooldown_time: 60
+
+# ========== Signal Filtering ==========
+# Minimum signal strength threshold (0.0 = no filtering)
+# Higher values = only trade on stronger signals
+# Example: 0.01 = require 1% EMA separation
+min_signal_strength: 0.0
+
+# ========== Candles Configuration ==========
+# Candle interval for signal generation
+# Options: 1m, 3m, 5m, 15m, 1h, 4h, 1d
+interval: 1m
+
+# Candles connector (defaults to connector_name if not specified)
+candles_connector: binance_paper_trade
+
+# Candles trading pair (defaults to trading_pair if not specified)
+candles_trading_pair: ETH-USDT
+
+# Empty candles_config list (populated automatically by controller)
+candles_config: []
+
+# ========== Notes ==========
+# 
+# Signal Generation:
+# - Long Signal: Fast EMA crosses above Slow EMA
+# - Short Signal: Fast EMA crosses below Slow EMA
+# - Exit: Opposite crossover signal
+#
+# Position Sizing:
+# - Fixed quote amount per position
+# - Amount in base currency calculated dynamically: position_size_quote / current_price
+#
+# Risk Management:
+# - No stop-loss or take-profit (signal-based exits only)
+# - Cooldown prevents rapid position changes
+# - Max executors limit simultaneous positions
+#
+# Recommended EMA Period Combinations:
+# - Scalping (1m-5m): 5/15, 8/21, 10/30
+# - Day Trading (15m-1h): 12/26, 20/50, 8/32
+# - Swing Trading (4h-1d): 20/50, 50/100, 50/200
+#
+# Backtesting:
+# To backtest this configuration, use:
+#   from core.backtesting import BacktestingEngine
+#   engine = BacktestingEngine()
+#   result = await engine.backtest_controller_from_yml(
+#       config_file="ewmac_eth_usdt_example.yml",
+#       controllers_conf_dir_path="configs/",
+#       start=start_timestamp,
+#       end=end_timestamp
+#   )
